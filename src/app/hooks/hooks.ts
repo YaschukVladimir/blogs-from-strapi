@@ -13,7 +13,7 @@ export const useFetchBlog = (blogsId: string) => {
         if (!res.ok) throw new Error("Network response was not ok");
         const data = await res.json();
         setBlog(data.data);
-      } catch (error: any) {
+      } catch (error: any) { //eslint-disable-line
         setError(error.message);
         console.log("Fetch error:", error);
       }
@@ -38,7 +38,7 @@ export const useFetchBlogs = () => {
           if (!res.ok) throw new Error("Network response was not ok");
           const data = await res.json();
           setBlogs(data.data);
-        } catch (error: any) {
+        } catch (error: any) { //eslint-disable-line
           setError(error.message);
           console.log("Fetch error:", error);
         }

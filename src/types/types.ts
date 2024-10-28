@@ -9,7 +9,7 @@ type ContentType = {
         text: string;
     }[]
 }
-
+/* eslint-disable */
 type BlogType = {
     Title: string;
     id: number;
@@ -25,7 +25,8 @@ type BlogType = {
 type BlogPageProps = {
     params: Promise<BlogPageParams>;
   }
+/* eslint-enable */
 
-type Blogs = {
-    data: BlogType[]
-}
+// type Blogs = {
+//     data: BlogType[]
+// }

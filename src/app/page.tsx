@@ -3,7 +3,7 @@
 
 import Pagination from '@/components/pagination';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFetchBlogs } from './hooks/hooks';
 
 const Home = () => {
@@ -18,11 +18,15 @@ const Home = () => {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  if (error) {
+    return <div>{error}</div>
+  }
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Articles</h1>
       <ul className="space-y-4">
-        {currentBlogs?.map((blog: any) => (
+        {currentBlogs?.map((blog) => (
           <li key={blog.id}>
             <Link className="text-blue-500 hover:underline text-lg font-medium" href={`/blogs/${blog.documentId}`}>
                 {blog.Title}
