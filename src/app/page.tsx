@@ -4,22 +4,32 @@
 import Pagination from '@/components/pagination';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { useFetchBlogs } from './hooks/hooks';
+import { useQuery } from '@tanstack/react-query';
 
 const Home = () => {
 
+  async function fetchBlogs() {
+    const res = await fetch('http://localhost:1337/api/blogs/');
+    const data = await res.json();
+    return data.data;
+  }
+
+  const { data, isLoading, isError, isSuccess} = useQuery<BlogType[]>({queryKey: ['blogs'], queryFn: fetchBlogs});
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 1; 
-  const { blogs, error } = useFetchBlogs();
 
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = blogs?.slice(indexOfFirstBlog, indexOfLastBlog);
+  const currentBlogs = data?.slice(indexOfFirstBlog, indexOfLastBlog);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  if (error) {
-    return <div>{error}</div>
+  if (isError) {
+    return <div>some error!</div>
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (
@@ -34,7 +44,7 @@ const Home = () => {
           </li>
         ))}
       </ul>
-      {blogs && <Pagination blogs={blogs} paginate={paginate} currentPage={currentPage}/>}
+      {isSuccess && <Pagination blogs={data} paginate={paginate} currentPage={currentPage}/>}
       
     </div>
   );
