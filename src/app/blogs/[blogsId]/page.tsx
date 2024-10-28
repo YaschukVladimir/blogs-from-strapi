@@ -10,7 +10,9 @@ export default function Blog({ params }: BlogPageProps) {
     const { blogsId } = use(params);
     const {blog, error} = useFetchBlog(blogsId);
 
-    if (error) return <div className="text-center text-red-500">{error}</div>;
+    if (error) {
+        return <div className="text-center text-red-500">{error}</div>;
+    } 
 
     return (
         <div className="container mx-auto p-4">
